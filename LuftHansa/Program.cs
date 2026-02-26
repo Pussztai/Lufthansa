@@ -119,29 +119,29 @@ namespace LuftHansa {
         static void mohoAlgoritmus(Dictionary<string, CsaladiCsomag> csaladok, kontener[] k) {
             List<CsaladiCsomag> csaladLista = osszesitesListaba(csaladok);
             rendezes(csaladLista);
-            foreach (CsaladiCsomag item in csaladLista) {
+            foreach (CsaladiCsomag csalad in csaladLista) {
                 int legjobbIndex = 0;
                 double legjobbCG = double.MaxValue;
                 for (int i = 0; i < k.Length; i++) {
-                    if (beleferE(k[i], item)) {
-                        double ujSzorzat = 0;
-                        double ujSuly = 0;
+                    if (beleferE(k[i], csalad)) {
+                        double Szorzat = 0;
+                        double suly = 0;
                         for (int j = 0; j < k.Length; j++) {
-                            ujSzorzat += k[j].jelenlegiSuly * k[j].erokar;
-                            ujSuly += k[j].jelenlegiSuly;
+                            Szorzat += k[j].jelenlegiSuly * k[j].erokar;
+                            suly += k[j].jelenlegiSuly;
                         }
-                        ujSzorzat += item.osszsuly * k[i].erokar;
-                        ujSuly += item.osszsuly;
-                        double ujCG = ujSzorzat / ujSuly;
+                        Szorzat += csalad.osszsuly * k[i].erokar;
+                        suly += csalad.osszsuly;
+                        double ujCG = Szorzat / suly;
                         if (Math.Abs(ujCG) < Math.Abs(legjobbCG)) {
                             legjobbIndex = i;
                             legjobbCG = ujCG;
                         }
                     }
                 }
-                k[legjobbIndex].jelenlegiSuly += item.osszsuly;
-                k[legjobbIndex].jelenlegiTerfogat += item.osszterfogat;
-                k[legjobbIndex].betoltottCsaladiCsomagok.Add(item);
+                k[legjobbIndex].jelenlegiSuly += csalad.osszsuly;
+                k[legjobbIndex].jelenlegiTerfogat += csalad.osszterfogat;
+                k[legjobbIndex].betoltottCsaladiCsomagok.Add(csalad);
                 
             }
         }
